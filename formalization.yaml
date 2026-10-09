@@ -1,0 +1,87 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml (v0.4): repo-root metadata for this formalization,
+# following https://github.com/mathlib-initiative/formalization.yaml
+
+version: "v0.4"
+
+project:
+  name: "generalized-albanese"
+  description: >-
+    Planned Lean 4 / Mathlib formalization of generalized Albanese varieties for complements Y = Z ∖ D of
+    normal-crossings divisors D in smooth projective varieties Z: the semi-abelian extension
+    0 → T_Y → Alb(Y) → Alb(Z) → 0, the identification of the character group of T_Y with the boundary
+    divisors algebraically equivalent to zero, the universal property and base-change/functoriality, and the
+    comparison with the maximal torsion-free abelian quotient of the geometric étale fundamental group
+    (Topics in Absolute Anabelian Geometry I, Appendix, Proposition A.8).
+    The repository is currently an empty scaffold: no definitions or theorems yet.
+  authors:
+    - "Claude (Anthropic)"
+    - "LANA Project"
+  responsible_maintainers:
+    - "Christian Merten"
+  license: "Apache-2.0"
+
+sources:
+  - title: "Morphismes universels et variété d'Albanese"
+    authors: ["Jean-Pierre Serre"]
+    type: "article"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+  - title: "Fondements de la Géométrie Algébrique (FGA)"
+    authors: ["Alexander Grothendieck"]
+    type: "book"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+  - title: "Néron Models"
+    authors: ["Siegfried Bosch", "Werner Lütkebohmert", "Michel Raynaud"]
+    type: "book"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+  - title: "Albanese and Picard 1-motives"
+    authors: ["Luca Barbieri-Viale", "Vasudevan Srinivas"]
+    type: "article"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+  - title: "On the Albanese map for smooth quasi-projective varieties"
+    authors: ["Michael Spiess", "Tamás Szamuely"]
+    type: "article"
+    note: "Planned reference (README, Established sources); nothing is formalised yet."
+
+related_formalizations:
+  - id: "https://github.com/lana-agents/iut"
+    relationship: "other"
+    note: "Intended as an input to the anabelian machinery of iut; not used by it."
+
+classification:
+  arxiv: ["math.AG"]
+  msc2020: ["14K30", "14L10", "14F35"]
+
+status:
+  scope: "not started (scaffold only)"
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+  main_results: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["claude-opus-5-5"]
+      framework: "Claude Code"
+      tool_setup: >-
+        orchestra for running the agents, taxis for project management, and Claude (Claude Code) as the
+        coding agent; Lean/Lake builds with `lake build --wfail`.
+      prompting_notes: >-
+        Human input consisted of high-level task descriptions and scope decisions.
+  notes: >-
+    Agents were run with orchestra; project management (issues, status) was done in taxis;
+    Claude was the coding agent.
+
+fidelity:
+  divergences: "None yet: nothing has been formalised."
+
+review:
+  status: "agent-reviewed"
+  reviewers: ["Claude (Anthropic)"]
+  notes: >-
+    The formalization has only been reviewed by Claude; it has not been reviewed by a human.
+    The repository is an empty scaffold (a placeholder module with no declarations), so there is
+    nothing to check yet.
+
+acknowledgements: "Built on Mathlib (Apache-2.0)."
