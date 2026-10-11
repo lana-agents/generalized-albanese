@@ -24,7 +24,9 @@ with what is formalised, what is an interface and what is out of reach, is in
 * `GeneralizedAlbanese/Curve/GeneralizedJacobian.lean`: the generalized Jacobian of a punctured
   curve on `k`-points, `0 → T_Y(k) → J_D(k) → J(k) → 0`, and `J(k) ≅ Pic⁰(Z)` under the moving
   lemma, relative to an explicit divisor-theory interface (`CurveDivisorData`,
-  `BoundaryEvaluation`; only a degenerate consistency instance is given).
+  `BoundaryEvaluation`).
+* `GeneralizedAlbanese/Curve/ProjectiveLine.lean`: `ℙ¹` over an algebraically closed field with
+  finitely many affine cusps satisfies that interface, and `J_D(k) ≅ T_Y(k)` for `Y = ℙ¹ ∖ D`.
 
 Not formalised: the Albanese / generalized Jacobian as algebraic groups and their universal
 property, the higher-dimensional normal-crossings case, and the comparison theorem

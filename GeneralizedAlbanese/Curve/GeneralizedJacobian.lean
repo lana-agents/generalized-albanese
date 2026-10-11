@@ -21,11 +21,13 @@ function field `K` and set of closed points `P`, and let `D ⊆ P` be a finite s
   torus, with character group `Div⁰_D`.
 
 The divisor theory of the curve is taken as an explicit interface (`CurveDivisorData`,
-`BoundaryEvaluation`): the divisor map `div : K^× → Div(Z)`, the facts that functions without
+`BoundaryEvaluation`; instantiated for `ℙ¹` in `GeneralizedAlbanese.Curve.ProjectiveLine`): the
+divisor map `div : K^× → Div(Z)`, the facts that functions without
 zeros and poles are constant and that principal divisors have degree zero (properness), the
 values of functions at the cusps, and the approximation theorem (every tuple of values at the
 cusps is attained by a function regular and invertible there). From these we prove the exact
-sequence (`genJacToJac_surjective`, `ker_genJacToJac`, `torusToGenJac_injective`) and, under
+sequence (`genJacToJac_surjective`, `genJacToJac_eq_zero_iff`,
+`torusToGenJac_injective`) and, under
 the moving lemma, the identification of `J(k)` with `Pic⁰(Z)` (`jacEquivPic`).
 
 Rosenlicht's theorem that `J_D` is a (semi-abelian) algebraic group and the universal property
@@ -292,10 +294,9 @@ end BoundaryEvaluation
 
 /-! ### Consistency check
 
-The interface is consistent: the degenerate datum with `K = k`, no points and no cusps satisfies
-it. This is only a sanity check of the hypotheses, not an instance of geometric interest; a
-genuine instance (e.g. `ℙ¹`, or a Weierstrass curve via the divisor theory of the
-`elliptic-curves` repository) is future work, see `Blueprint.md`. -/
+The degenerate datum with `K = k`, no points and no cusps satisfies the interface. This is only a
+sanity check of the hypotheses; the genuine instance `ℙ¹` with finitely many affine cusps is in
+`GeneralizedAlbanese.Curve.ProjectiveLine`. -/
 
 /-- The degenerate divisor datum: `K = k`, no closed points. -/
 def CurveDivisorData.trivial (k : Type*) [Field k] : CurveDivisorData k k PEmpty where

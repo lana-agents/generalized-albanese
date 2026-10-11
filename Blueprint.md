@@ -66,6 +66,8 @@ and two documented interfaces.
 | the profinite completions `Π̂_{g,n} → Π̂_{g,0}` are a cuspidal presentation | `CuspidalPresentation.completion` | `Pi1/Profinite.lean` |
 | generalized Jacobian on points: `0 → T_Y(k) → J_D(k) → J(k) → 0` | `torusToGenJac_injective`, `genJacToJac_eq_zero_iff`, `genJacToJac_surjective` | `Curve/GeneralizedJacobian.lean` |
 | `J(k) ≅ Pic⁰(Z)` under the moving lemma | `jacEquivPic` | `Curve/GeneralizedJacobian.lean` |
+| `ℙ¹` (function field `RatFunc k`, `k` algebraically closed) satisfies the divisor interface, for any finite set of affine cusps | `ProjectiveLine.curveData`, `ProjectiveLine.boundaryEvaluation` | `Curve/ProjectiveLine.lean` |
+| `J(k) = 0` for `ℙ¹`, hence `T_Y(k) ≅ J_D(k)` for `Y = ℙ¹ ∖ D` | `ProjectiveLine.jac_eq_zero`, `ProjectiveLine.torusEquivGenJac` | `Curve/ProjectiveLine.lean` |
 
 Since `ℤ^n/ℤ = Hom(Div⁰_D, ℤ)` (`charDualEquiv`), the abelianisation sequence is the discrete
 (topological) form of `0 → T(T_Y) → T(Alb Y) → T(Alb Z) → 0`, and the finite-coefficient
@@ -82,9 +84,11 @@ interface below is instantiated.
   anywhere). The interface is shown satisfiable by the profinite completions.
 * **`CurveDivisorData`, `BoundaryEvaluation`** (`Curve/GeneralizedJacobian.lean`): the divisor
   map `K^× → Div(Z)` (kernel = constants, degree zero) and values at the cusps with the
-  approximation theorem. Only a degenerate consistency instance is provided; instantiating it
-  for `ℙ¹` or for Weierstrass curves (via the divisor theory of `elliptic-curves`) is future
-  work.
+  approximation theorem. Instantiated for `ℙ¹` with finitely many affine cusps
+  (`Curve/ProjectiveLine.lean`: divisors via root multiplicities, degree zero over an
+  algebraically closed field, approximation by Lagrange interpolation). Instantiating it for
+  curves of positive genus (e.g. Weierstrass curves via the divisor theory of `elliptic-curves`)
+  is future work.
 
 ### Out of reach (not formalised), and why
 
@@ -108,6 +112,7 @@ interface below is instantiated.
 3. M3 surface groups: residue sequence, abelianisation, torsion-freeness — done.
 4. M4 profinite / étale interface and its instantiation by completions — done.
 5. M5 generalized Jacobian of a punctured curve on points — done (interface-based).
-6. Future: instantiate `CurveDivisorData` for `ℙ¹` and Weierstrass curves; connect
+6. M6 the instance `ℙ¹ ∖ D`: `J_D(k) ≅ T_Y(k)` — done.
+7. Future: instantiate `CurveDivisorData` for Weierstrass curves (cusp at infinity included); connect
    `CuspidalPresentation` to `pi1`'s `GaloisPi1.pi1` of a punctured curve; profinite
    abelianisation `Π̂_{g,n}^ab ≅ Ẑ^{2g+n-1}` directly.

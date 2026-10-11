@@ -1,6 +1,7 @@
 import GeneralizedAlbanese.Boundary.Divisor
 import GeneralizedAlbanese.Boundary.Torus
 import GeneralizedAlbanese.Curve.GeneralizedJacobian
+import GeneralizedAlbanese.Curve.ProjectiveLine
 import GeneralizedAlbanese.Pi1.Profinite
 import GeneralizedAlbanese.Pi1.SurfaceAbelianization
 import GeneralizedAlbanese.Pi1.SurfaceGroup
