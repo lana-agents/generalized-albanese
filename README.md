@@ -4,11 +4,31 @@ Generalized Albanese varieties for normal-crossings complements.
 
 ## Status
 
-**Not started.** The repository is the initial project scaffold (a single commit,
-2026-07-20). The library `GeneralizedAlbanese` contains only the placeholder module
-`GeneralizedAlbanese/Basic.lean`, which has no declarations: there are no definitions or theorems yet
-(and so no `sorry`, `axiom` or `admit`). Everything under *Goals* below is planned, not
-formalised.
+**Partial: the punctured-curve case, at the level of points, characters and fundamental
+groups.** Everything below is sorry- and axiom-free (`lake build --wfail`); the scope decision,
+with what is formalised, what is an interface and what is out of reach, is in
+[`Blueprint.md`](Blueprint.md).
+
+* `GeneralizedAlbanese/Boundary/Divisor.lean`: boundary divisors, the character lattice
+  `Div⁰_D` of the boundary torus, `Hom(Div⁰_D, M) ≅ (D → M) ⧸ M`, `Div⁰_D` free of rank `#D - 1`.
+* `GeneralizedAlbanese/Boundary/Torus.lean`: split tori `Hom(X, A^×)` represented by `R[X]`,
+  the boundary torus and `1 → A^× → (A^×)^D → T_Y(A) → 1`.
+* `GeneralizedAlbanese/Pi1/SurfaceGroup.lean`, `Pi1/SurfaceAbelianization.lean`: the surface
+  group `Π_{g,n}` of a punctured curve; `Π_{g,n}^ab ≅ ℤ^{2g} × ℤ^n/ℤ` is torsion-free and sits in
+  `0 → ℤ^n/ℤ → Π_{g,n}^ab → Π_{g,0}^ab → 0`; for characters,
+  `0 → Hom(Π_{g,0}, M) → Hom(Π_{g,n}, M) → {f | ∑ f = 0} → 0`, and with `M = ℤ` the quotient is
+  `Div⁰_D`.
+* `GeneralizedAlbanese/Pi1/Profinite.lean`: the same sequence for continuous characters with
+  finite values of any `CuspidalPresentation` (an explicit interface standing for
+  `π₁ᵉᵗ(Y_k̄) ≅ Π̂_{g,n}`), and the profinite completions as an instance.
+* `GeneralizedAlbanese/Curve/GeneralizedJacobian.lean`: the generalized Jacobian of a punctured
+  curve on `k`-points, `0 → T_Y(k) → J_D(k) → J(k) → 0`, and `J(k) ≅ Pic⁰(Z)` under the moving
+  lemma, relative to an explicit divisor-theory interface (`CurveDivisorData`,
+  `BoundaryEvaluation`; only a degenerate consistency instance is given).
+
+Not formalised: the Albanese / generalized Jacobian as algebraic groups and their universal
+property, the higher-dimensional normal-crossings case, and the comparison theorem
+`π₁ᵉᵗ(Y_k̄) ≅ Π̂_{g,n}` itself (see `Blueprint.md`).
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.

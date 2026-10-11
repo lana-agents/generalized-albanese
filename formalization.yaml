@@ -13,7 +13,11 @@ project:
     divisors algebraically equivalent to zero, the universal property and base-change/functoriality, and the
     comparison with the maximal torsion-free abelian quotient of the geometric étale fundamental group
     (Topics in Absolute Anabelian Geometry I, Appendix, Proposition A.8).
-    The repository is currently an empty scaffold: no definitions or theorems yet.
+    Currently formalised: the punctured-curve case at the level of points, characters and
+    fundamental groups (boundary torus with character group Div⁰_D, abelianisation of punctured
+    surface groups, finite-coefficient étale sequence under an explicit cuspidal-presentation
+    interface, generalized Jacobian on points under an explicit divisor-theory interface).
+    See Blueprint.md for the scope decision.
   authors:
     - "Claude (Anthropic)"
     - "LANA Project"
@@ -25,23 +29,23 @@ sources:
   - title: "Morphismes universels et variété d'Albanese"
     authors: ["Jean-Pierre Serre"]
     type: "article"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Background reference (README, Established sources); the Albanese variety itself is not formalised."
   - title: "Fondements de la Géométrie Algébrique (FGA)"
     authors: ["Alexander Grothendieck"]
     type: "book"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Background reference (README, Established sources); not used directly."
   - title: "Néron Models"
     authors: ["Siegfried Bosch", "Werner Lütkebohmert", "Michel Raynaud"]
     type: "book"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Background reference (README, Established sources); not used directly."
   - title: "Albanese and Picard 1-motives"
     authors: ["Luca Barbieri-Viale", "Vasudevan Srinivas"]
     type: "article"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Background reference (README, Established sources); not used directly."
   - title: "On the Albanese map for smooth quasi-projective varieties"
     authors: ["Michael Spiess", "Tamás Szamuely"]
     type: "article"
-    note: "Planned reference (README, Established sources); nothing is formalised yet."
+    note: "Background reference (README, Established sources); not used directly."
 
 related_formalizations:
   - id: "https://github.com/lana-agents/iut"
@@ -53,11 +57,23 @@ classification:
   msc2020: ["14K30", "14L10", "14F35"]
 
 status:
-  scope: "not started (scaffold only)"
+  scope: "partial: punctured-curve case (characters, surface-group abelianisation, generalized Jacobian on points) relative to explicit interfaces"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
-  main_results: []
+  main_results:
+    - "GeneralizedAlbanese.charDualEquiv"
+    - "GeneralizedAlbanese.finrank_boundaryChar"
+    - "GeneralizedAlbanese.ker_boundaryTorusProj"
+    - "GeneralizedAlbanese.SurfaceGroup.characterQuotientEquiv"
+    - "GeneralizedAlbanese.SurfaceGroup.integralCharacterQuotientEquiv"
+    - "GeneralizedAlbanese.SurfaceGroup.isMulTorsionFree_abelianization"
+    - "GeneralizedAlbanese.SurfaceGroup.range_cuspMap"
+    - "GeneralizedAlbanese.CuspidalPresentation.residue_eq_zero_iff"
+    - "GeneralizedAlbanese.CuspidalPresentation.completion"
+    - "GeneralizedAlbanese.BoundaryEvaluation.genJacToJac_eq_zero_iff"
+    - "GeneralizedAlbanese.BoundaryEvaluation.torusToGenJac_injective"
+    - "GeneralizedAlbanese.CurveDivisorData.jacEquivPic"
 
 automation:
   methods:
@@ -74,14 +90,20 @@ automation:
     Claude was the coding agent.
 
 fidelity:
-  divergences: "None yet: nothing has been formalised."
+  divergences: >-
+    Only the punctured-curve case is treated, and not as algebraic groups: the generalized Jacobian
+    appears through its k-points relative to an explicit divisor-theory interface
+    (CurveDivisorData, BoundaryEvaluation), and the étale fundamental group through an explicit
+    interface (CuspidalPresentation) standing for the comparison with the profinite surface group.
+    The universal property of the Albanese, the higher-dimensional normal-crossings case and Tate
+    twists are not formalised (Blueprint.md).
 
 review:
   status: "agent-reviewed"
   reviewers: ["Claude (Anthropic)"]
   notes: >-
     The formalization has only been reviewed by Claude; it has not been reviewed by a human.
-    The repository is an empty scaffold (a placeholder module with no declarations), so there is
-    nothing to check yet.
+    Interfaces are structure fields and hypotheses documented in the module docstrings and in
+    Blueprint.md.
 
 acknowledgements: "Built on Mathlib (Apache-2.0)."
