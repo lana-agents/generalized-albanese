@@ -35,8 +35,10 @@ The downstream use in the IUT strand ([AbsTopIII], Belyi cuspidalisation) needs 
   no comparison with surface groups.
 * `oka`: GAGA and the Riemann existence theorem (finite étale covers of `X` vs. of `X^an`).
   The topological input (presentation of `π₁` of a punctured surface) is not formalised anywhere.
-* `elliptic-curves`: divisors, degree-zero theorem and class group on the function field of a
-  Weierstrass curve. `belyi`, `genl`: curves, maps to `ℙ¹`; no Jacobians.
+* `elliptic-curves` (a dependency, pinned at `8e2b208`, same Mathlib commit): divisors, the
+  degree-zero theorem, the places of the projective curve (`placeOf`, DVRs, residue fields equal
+  to `k` over `k = k̄`) and the class of a divisor in `Cl(k[E])`, compatible with Mathlib's
+  `Point.toClass`. `belyi`, `genl`: curves, maps to `ℙ¹`; no Jacobians.
 
 ## Scope decision
 
@@ -66,8 +68,13 @@ and two documented interfaces.
 | the profinite completions `Π̂_{g,n} → Π̂_{g,0}` are a cuspidal presentation | `CuspidalPresentation.completion` | `Pi1/Profinite.lean` |
 | generalized Jacobian on points: `0 → T_Y(k) → J_D(k) → J(k) → 0` | `torusToGenJac_injective`, `genJacToJac_eq_zero_iff`, `genJacToJac_surjective` | `Curve/GeneralizedJacobian.lean` |
 | `J(k) ≅ Pic⁰(Z)` under the moving lemma | `jacEquivPic` | `Curve/GeneralizedJacobian.lean` |
-| `ℙ¹` (function field `RatFunc k`, `k` algebraically closed) satisfies the divisor interface, for any finite set of affine cusps | `ProjectiveLine.curveData`, `ProjectiveLine.boundaryEvaluation` | `Curve/ProjectiveLine.lean` |
+| `ℙ¹` (function field `RatFunc k`, `k` algebraically closed) satisfies the divisor interface, for any finite set of cusps, `∞` allowed (value at `∞` = ratio of leading coefficients; approximation = Lagrange interpolation corrected at `∞`) | `ProjectiveLine.curveData`, `ProjectiveLine.valInfty`, `ProjectiveLine.exists_valAt_eq`, `ProjectiveLine.boundaryEvaluation` | `Curve/ProjectiveLine.lean` |
 | `J(k) = 0` for `ℙ¹`, hence `T_Y(k) ≅ J_D(k)` for `Y = ℙ¹ ∖ D` | `ProjectiveLine.jac_eq_zero`, `ProjectiveLine.torusEquivGenJac` | `Curve/ProjectiveLine.lean` |
+| an elliptic curve `E/k`, `k = k̄`, satisfies the divisor interface (closed points = places of `k(E)`, all of degree one) | `EllipticCurve.curveData`, `EllipticCurve.degProjPt_eq_one` | `Curve/EllipticCurve.lean` |
+| values at finitely many cusps of `E` (origin allowed) and the approximation theorem (CRT in `k[E]` + pole order at `O`) | `EllipticCurve.valAt`, `EllipticCurve.exists_valAt_eq`, `EllipticCurve.boundaryEvaluation` | `Curve/EllipticCurve.lean` |
+| `J(k) ≅ E(k)` for `Y = E ∖ D` (via `Cl(k[E])` and Mathlib's `Point.toClass`), Abel–Jacobi `[Q] - [R] ↦ Q - R`; `Pic⁰(E) ≅ E(k)` | `EllipticCurve.jacToClass_injective`, `EllipticCurve.range_jacToClass`, `EllipticCurve.jacEquivPoint`, `EllipticCurve.jacEquivPoint_mk`, `EllipticCurve.picEquivPoint` | `Curve/EllipticCurve.lean` |
+| `0 → T_Y(k) → J_D(k) → E(k) → 0` for `Y = E ∖ D` | `EllipticCurve.torusToGenJac_injective`, `EllipticCurve.genJacToPoint_eq_zero_iff`, `EllipticCurve.genJacToPoint_surjective` | `Curve/EllipticCurve.lean` |
+| `T_X(A)[n] ≅ Hom(X, μ_n(A))`; Galois acts on `T_X[n]`, `T_X[p^n]` via the cyclotomic character (Tate twist: `T_Y[n] ≅ Hom(Div⁰_D, ℤ/n(1))`, `T_p(T_Y) ≅ Hom(Div⁰_D, ℤ_p(1))`) | `SplitTorus.torsionEquiv`, `SplitTorus.map_eq_pow_modularCyclotomicCharacter`, `SplitTorus.map_eq_pow_cyclotomicCharacter`, `boundaryTorus.torsionEquiv` | `Boundary/TateTwist.lean` |
 
 Since `ℤ^n/ℤ = Hom(Div⁰_D, ℤ)` (`charDualEquiv`), the abelianisation sequence is the discrete
 (topological) form of `0 → T(T_Y) → T(Alb Y) → T(Alb Z) → 0`, and the finite-coefficient
@@ -86,9 +93,13 @@ interface below is instantiated.
   map `K^× → Div(Z)` (kernel = constants, degree zero) and values at the cusps with the
   approximation theorem. Instantiated for `ℙ¹` with finitely many affine cusps
   (`Curve/ProjectiveLine.lean`: divisors via root multiplicities, degree zero over an
-  algebraically closed field, approximation by Lagrange interpolation). Instantiating it for
-  curves of positive genus (e.g. Weierstrass curves via the divisor theory of `elliptic-curves`)
-  is future work.
+  algebraically closed field, approximation by Lagrange interpolation; `∞` may be a cusp) and
+  for elliptic curves with any finite set of cusps (`Curve/EllipticCurve.lean`, divisor theory
+  and places from `elliptic-curves`, approximation by the Chinese remainder theorem in the
+  Dedekind domain `k[E]` with a denominator of large pole order at `O`). For a general curve
+  the interface would follow from the theory of places of a function field of one variable
+  (strong approximation, finiteness of `div f`, degree of principal divisors), which Mathlib
+  does not have beyond `ℙ¹` and Weierstrass curves.
 
 ### Out of reach (not formalised), and why
 
@@ -102,8 +113,17 @@ interface below is instantiated.
 * The comparison `π₁ᵉᵗ(Y_k̄) ≅ Π̂_{g,n}` itself (and its positive-characteristic prime-to-`p`
   analogue via specialisation): needs the topology of punctured surfaces, and the link between
   `pi1`'s `GaloisPi1` and the analytic side. Recorded as `CuspidalPresentation`.
-* Tate twists: the discrete statements ignore the Galois action; the `Ẑ(1)` twist of the inertia
-  generators is part of the arithmetic interface, not of the geometric statements here.
+* Tate twists on the fundamental-group side: the torus side is done (`Boundary/TateTwist.lean`:
+  Galois acts on `T_Y[n]` and `T_p(T_Y)` through the cyclotomic character). The corresponding
+  statement for `π₁` — the inertia subgroup at a cusp is canonically `Ẑ(1)`, and `G_k` acts on
+  `π₁(Y_k̄)^ab ⊇ Hom(Div⁰_D, Ẑ(1))` through the cyclotomic character — needs the arithmetic
+  fundamental group `1 → π₁(Y_k̄) → π₁(Y) → G_k → 1` with its outer action, and the
+  identification of tame inertia of the completed local fields at the cusps with
+  `lim μ_n` (Kummer theory of `k̄((t))`); `pi1` has tame inertia groups but neither the
+  homotopy exact sequence nor this identification.
+* Positive genus beyond elliptic curves: needs the divisor theory of an arbitrary function field
+  of one variable (see the interface paragraph above); `J(k) ≅ Pic⁰(Z)` then needs the moving
+  lemma (`CurveDivisorData.MovingLemma`), which for `E` is avoided by the class-group argument.
 
 ## Milestones
 
@@ -112,7 +132,9 @@ interface below is instantiated.
 3. M3 surface groups: residue sequence, abelianisation, torsion-freeness — done.
 4. M4 profinite / étale interface and its instantiation by completions — done.
 5. M5 generalized Jacobian of a punctured curve on points — done (interface-based).
-6. M6 the instance `ℙ¹ ∖ D`: `J_D(k) ≅ T_Y(k)` — done.
-7. Future: instantiate `CurveDivisorData` for Weierstrass curves (cusp at infinity included); connect
+6. M6 the instance `ℙ¹ ∖ D`: `J_D(k) ≅ T_Y(k)` — done, cusp at `∞` included.
+7. M7 the instance `E ∖ D` for an elliptic curve: `0 → T_Y(k) → J_D(k) → E(k) → 0` — done.
+8. M8 Tate twist on the torus side — done.
+9. Future: connect
    `CuspidalPresentation` to `pi1`'s `GaloisPi1.pi1` of a punctured curve; profinite
    abelianisation `Π̂_{g,n}^ab ≅ Ẑ^{2g+n-1}` directly.

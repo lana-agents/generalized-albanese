@@ -14,5 +14,10 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "v4.32.0"
 
+[[require]]
+name = "elliptic_curves"
+git = "https://github.com/lana-agents/elliptic-curves"
+rev = "8e2b20806fbe97d6fede33dc4eda1e7f350fb138"
+
 [[lean_lib]]
 name = "GeneralizedAlbanese"

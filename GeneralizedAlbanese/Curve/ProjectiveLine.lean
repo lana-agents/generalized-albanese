@@ -374,8 +374,9 @@ def ev : (curveData (k := k)).unitsAt ι →* (D → kˣ) where
     exact valAt_mul (f : (RatFunc k)ˣ).ne_zero (g : (RatFunc k)ˣ).ne_zero
       (ordFun_eq_zero_of_mem ι f.2 d) (ordFun_eq_zero_of_mem ι g.2 d)
 
-variable [Fintype D]
+variable [Finite D]
 
+omit [DecidableEq k] in
 /-- **The approximation theorem on `ℙ¹`**: for finitely many distinct points `ι d` of `ℙ¹`
 (possibly including `∞`) and values `t d ∈ k^×`, there is a rational function regular and
 invertible at every `ι d` with value `t d` there. Writing `s` for the affine cusps `a_d` and
@@ -385,6 +386,7 @@ invertible at every `ι d` with value `t d` there. Writing `s` for the affine cu
 theorem exists_valAt_eq (hι : Function.Injective ι) (t : D → kˣ) :
     ∃ f : RatFunc k, f ≠ 0 ∧ ∀ d, ordFun f (ι d) = 0 ∧ valAt (ι d) f = t d := by
   classical
+  have := Fintype.ofFinite D
   set s : Finset D := Finset.univ.filter fun d => (ι d).isSome
   set v : D → k := fun d => (ι d).getD 0
   have hsv : ∀ d ∈ s, ι d = some (v d) := by
@@ -460,7 +462,7 @@ def boundaryEvaluation (hι : Function.Injective ι) :
     refine ⟨⟨Units.mk0 f hf, fun d => (hft d).1⟩, funext fun d => Units.ext ?_⟩
     exact (hft d).2
 
-omit [Field k] [DecidableEq k] [IsAlgClosed k] [Fintype D] in
+omit [Field k] [DecidableEq k] [IsAlgClosed k] [Finite D] in
 lemma cusps_injective {e : D → k} (he : Function.Injective e) : Function.Injective (cusps e) :=
   (Option.some_injective k).comp he
 
@@ -509,7 +511,7 @@ lemma divHom_linComb (x : Option k →₀ ℤ) :
       simp only [linComb, Finsupp.liftAddHom_apply_single, zmultiplesHom_apply, map_zsmul,
         divHom_lin, boundaryDegree_single, smul_sub, Finsupp.smul_single, smul_eq_mul, mul_one]
 
-omit [Fintype D] in
+omit [Finite D] in
 /-- **`J(k) = 0` for `ℙ¹`**: every degree-zero divisor supported away from the cusps is the
 divisor of a function invertible at the cusps. -/
 theorem jac_eq_zero (z : (curveData (k := k)).Jac ι) : z = 0 := by
@@ -538,3 +540,7 @@ def torusEquivGenJac :
 
 end ProjectiveLine
 
+
+end GeneralizedAlbanese
+
+end

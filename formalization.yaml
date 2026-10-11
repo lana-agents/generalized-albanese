@@ -17,7 +17,9 @@ project:
     fundamental groups (boundary torus with character group Div⁰_D, abelianisation of punctured
     surface groups, finite-coefficient étale sequence under an explicit cuspidal-presentation
     interface, generalized Jacobian on points under an explicit divisor-theory interface,
-    instantiated for the projective line).
+    instantiated for the projective line (cusps anywhere, infinity included) and for elliptic
+    curves, where 0 → T_Y(k) → J_D(k) → E(k) → 0 is realised with J(k) ≅ E(k) via the class
+    group; Tate twist of the torsion of the boundary torus via the cyclotomic character).
     See Blueprint.md for the scope decision.
   authors:
     - "Claude (Anthropic)"
@@ -52,13 +54,16 @@ related_formalizations:
   - id: "https://github.com/lana-agents/iut"
     relationship: "other"
     note: "Intended as an input to the anabelian machinery of iut; not used by it."
+  - id: "https://github.com/lana-agents/elliptic-curves"
+    relationship: "builds-on"
+    note: "Lake dependency pinned at 8e2b20806fbe97d6fede33dc4eda1e7f350fb138: divisor theory, places and class group of Weierstrass curves, used for the elliptic-curve instance."
 
 classification:
   arxiv: ["math.AG"]
   msc2020: ["14K30", "14L10", "14F35"]
 
 status:
-  scope: "partial: punctured-curve case (characters, surface-group abelianisation, generalized Jacobian on points) relative to explicit interfaces"
+  scope: "partial: punctured-curve case (characters, surface-group abelianisation, generalized Jacobian on points) relative to explicit interfaces, instantiated for P^1 and elliptic curves"
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -77,6 +82,18 @@ status:
     - "GeneralizedAlbanese.CurveDivisorData.jacEquivPic"
     - "GeneralizedAlbanese.ProjectiveLine.boundaryEvaluation"
     - "GeneralizedAlbanese.ProjectiveLine.torusEquivGenJac"
+    - "GeneralizedAlbanese.ProjectiveLine.exists_valAt_eq"
+    - "GeneralizedAlbanese.EllipticCurve.curveData"
+    - "GeneralizedAlbanese.EllipticCurve.boundaryEvaluation"
+    - "GeneralizedAlbanese.EllipticCurve.exists_valAt_eq"
+    - "GeneralizedAlbanese.EllipticCurve.jacEquivPoint"
+    - "GeneralizedAlbanese.EllipticCurve.jacEquivPoint_mk"
+    - "GeneralizedAlbanese.EllipticCurve.picEquivPoint"
+    - "GeneralizedAlbanese.EllipticCurve.genJacToPoint_surjective"
+    - "GeneralizedAlbanese.EllipticCurve.genJacToPoint_eq_zero_iff"
+    - "GeneralizedAlbanese.SplitTorus.torsionEquiv"
+    - "GeneralizedAlbanese.SplitTorus.map_eq_pow_modularCyclotomicCharacter"
+    - "GeneralizedAlbanese.SplitTorus.map_eq_pow_cyclotomicCharacter"
 
 automation:
   methods:
@@ -98,8 +115,10 @@ fidelity:
     appears through its k-points relative to an explicit divisor-theory interface
     (CurveDivisorData, BoundaryEvaluation), and the étale fundamental group through an explicit
     interface (CuspidalPresentation) standing for the comparison with the profinite surface group.
-    The universal property of the Albanese, the higher-dimensional normal-crossings case and Tate
-    twists are not formalised (Blueprint.md).
+    The interfaces are instantiated for P^1 and for elliptic curves over algebraically closed
+    fields. The universal property of the Albanese, the higher-dimensional normal-crossings case
+    and the Galois action on pi_1 (Tate twist of inertia) are not formalised; the Tate twist is
+    formalised on the torus side only (Blueprint.md).
 
 review:
   status: "agent-reviewed"
@@ -109,4 +128,4 @@ review:
     Interfaces are structure fields and hypotheses documented in the module docstrings and in
     Blueprint.md.
 
-acknowledgements: "Built on Mathlib (Apache-2.0)."
+acknowledgements: "Built on Mathlib (Apache-2.0) and lana-agents/elliptic-curves (Apache-2.0)."

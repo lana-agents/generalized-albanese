@@ -1,5 +1,7 @@
 import GeneralizedAlbanese.Boundary.Divisor
+import GeneralizedAlbanese.Boundary.TateTwist
 import GeneralizedAlbanese.Boundary.Torus
+import GeneralizedAlbanese.Curve.EllipticCurve
 import GeneralizedAlbanese.Curve.GeneralizedJacobian
 import GeneralizedAlbanese.Curve.ProjectiveLine
 import GeneralizedAlbanese.Pi1.Profinite

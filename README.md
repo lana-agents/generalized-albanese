@@ -26,11 +26,25 @@ with what is formalised, what is an interface and what is out of reach, is in
   lemma, relative to an explicit divisor-theory interface (`CurveDivisorData`,
   `BoundaryEvaluation`).
 * `GeneralizedAlbanese/Curve/ProjectiveLine.lean`: `ℙ¹` over an algebraically closed field with
-  finitely many affine cusps satisfies that interface, and `J_D(k) ≅ T_Y(k)` for `Y = ℙ¹ ∖ D`.
+  any finite set of cusps (affine ones and possibly `∞`) satisfies that interface, and
+  `J_D(k) ≅ T_Y(k)` for `Y = ℙ¹ ∖ D`.
+* `GeneralizedAlbanese/Curve/EllipticCurve.lean`: an elliptic curve `E` over an algebraically
+  closed field, with any finite set of cusps (possibly containing the origin), satisfies that
+  interface (divisor theory of `elliptic-curves`; approximation theorem via the Chinese
+  remainder theorem in `k[E]`); `J(k) ≅ E(k)` and `Pic⁰(E) ≅ E(k)` through Mathlib's
+  `Point.toClass`, compatible with `[Q] - [R] ↦ Q - R`; hence the exact sequence
+  `0 → T_Y(k) → J_D(k) → E(k) → 0` for `Y = E ∖ D`.
+* `GeneralizedAlbanese/Boundary/TateTwist.lean`: `T_X(A)[n] ≅ Hom(X, μ_n(A))`, and Galois
+  automorphisms act on `T_X[n]` and `T_X[p^∞]` through the (mod `n`, resp. `p`-adic)
+  cyclotomic character: `T_Y[n] ≅ Hom(Div⁰_D, ℤ/n(1))`, `T_p(T_Y) ≅ Hom(Div⁰_D, ℤ_p(1))`.
 
-Not formalised: the Albanese / generalized Jacobian as algebraic groups and their universal
-property, the higher-dimensional normal-crossings case, and the comparison theorem
-`π₁ᵉᵗ(Y_k̄) ≅ Π̂_{g,n}` itself (see `Blueprint.md`).
+Not formalised (see `Blueprint.md` for the precise missing infrastructure): the Albanese /
+generalized Jacobian as algebraic groups and their universal property (needs Picard schemes,
+abelian and semi-abelian varieties), the higher-dimensional normal-crossings case (needs
+Néron–Severi groups and algebraic equivalence), the comparison theorem `π₁ᵉᵗ(Y_k̄) ≅ Π̂_{g,n}`
+itself (needs the topology of punctured surfaces), and the Galois action on `π₁` identifying
+inertia at the cusps with `Ẑ(1)` (needs the arithmetic fundamental group of a curve over a
+non-closed field with its outer Galois action).
 
 No lana-agents repository depends on this one: `iut` and its pinned lana-agents
 dependencies do not `require` it.
@@ -63,7 +77,10 @@ Intended as an input to the anabelian machinery of `iut`; not used by it.
 ## Layout
 
 Lean 4 project pinned to `leanprover/lean4:v4.32.0` with Mathlib at `v4.32.0`
-(commit `81a5d25`), its only direct dependency.
+(commit `81a5d25`) and
+[`lana-agents/elliptic-curves`](https://github.com/lana-agents/elliptic-curves) pinned at commit
+`8e2b208` (same Mathlib commit; only the ~40 modules imported by `Curve/EllipticCurve.lean` are
+built).
 Library sources live under `GeneralizedAlbanese/`, and every file must be imported from
 the root module `GeneralizedAlbanese.lean`.
 
