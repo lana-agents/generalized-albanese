@@ -1,6 +1,4 @@
-/-
-Copyright (c) 2026 LANA Project. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-Authors: LANA Project
--/
-import GeneralizedAlbanese.Basic
+import GeneralizedAlbanese.Boundary.Divisor
+import GeneralizedAlbanese.Boundary.Torus
+import GeneralizedAlbanese.Pi1.SurfaceAbelianization
+import GeneralizedAlbanese.Pi1.SurfaceGroup
